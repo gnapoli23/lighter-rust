@@ -29,12 +29,12 @@ fn main() {
     #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
     {
         println!("cargo:rustc-link-search=native={dir}/libs/darwin/arm64");
-        println!("cargo:rustc-link-lib=dylib=liblighter-signer");
+        println!("cargo:rustc-link-lib=dylib=lighter-signer");
     }
     #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
     {
         println!("cargo:rustc-link-search=native={dir}/libs/windows/amd64");
-        println!("cargo:rustc-link-lib=dylib=liblighter-signer");
+        println!("cargo:rustc-link-lib=dylib=lighter-signer");
     }
 
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());

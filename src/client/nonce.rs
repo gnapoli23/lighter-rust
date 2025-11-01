@@ -22,21 +22,36 @@ impl NonceManager {
             .map_err(|e| LighterError::Nonce(format!("Time error: {}", e)))?
             .as_millis() as u64;
 
-        let last_timestamp = self.last_timestamp.load(Ordering::Acquire);
+        loop {
+            let last_timestamp = self.last_timestamp.load(Ordering::Acquire);
 
-        if current_timestamp > last_timestamp {
-            self.last_timestamp
-                .store(current_timestamp, Ordering::Release);
-            self.counter.store(0, Ordering::Release);
-            Ok((current_timestamp * 1000) as i64)
-        } else {
-            let counter = self.counter.fetch_add(1, Ordering::AcqRel);
-            if counter >= 999 {
-                return Err(LighterError::Nonce(
-                    "Too many nonces generated in the same millisecond".to_string(),
-                ));
+            if current_timestamp > last_timestamp {
+                if self
+                    .last_timestamp
+                    .compare_exchange(
+                        last_timestamp,
+                        current_timestamp,
+                        Ordering::AcqRel,
+                        Ordering::Acquire,
+                    )
+                    .is_ok()
+                {
+                    // Success, we reset in this case
+                    self.counter.store(0, Ordering::Release);
+                    return Ok((current_timestamp * 1000) as i64);
+                } else {
+                    // Retry
+                    continue;
+                }
+            } else {
+                let counter = self.counter.fetch_add(1, Ordering::AcqRel);
+                if counter >= 999 {
+                    return Err(LighterError::Nonce(
+                        "Too many nonces generated in the same millisecond".to_string(),
+                    ));
+                }
+                return Ok((last_timestamp * 1000 + counter + 1) as i64);
             }
-            Ok((last_timestamp * 1000 + counter + 1) as i64)
         }
     }
 }
