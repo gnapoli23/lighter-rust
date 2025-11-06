@@ -1,6 +1,6 @@
 [package]
 name = "lighter-rust"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 description = "A comprehensive Rust SDK for the Lighter trading platform with async/await, WebSocket support, and Ethereum wallet integration"
 license = "MIT"
