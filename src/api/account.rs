@@ -263,30 +263,6 @@ impl AccountApi {
         Ok(resp)
     }
 
-    /// Get public pools
-    pub async fn public_pools(
-        &self,
-        index: i64,
-        limit: i64,
-        filter: Option<&str>,
-        account_index: Option<i64>,
-    ) -> Result<PublicPools> {
-        let auth_token = self.signer.get_auth_token(None)?;
-        let resp = apis::account_api::public_pools(
-            &self.config,
-            index,
-            limit,
-            Some(&auth_token),
-            None,
-            filter,
-            account_index,
-        )
-        .await
-        .inspect_err(|e| tracing::error!("unable to call `public_pools`: {e}"))?;
-
-        Ok(resp)
-    }
-
     /// Get public pools metadata
     pub async fn public_pools_metadata(
         &self,
