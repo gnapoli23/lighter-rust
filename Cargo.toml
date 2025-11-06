@@ -24,6 +24,16 @@ exclude = [
     "*.swo",
     "*~",
     ".DS_Store",
+    "libs/",
+    "patches/",
+    "openapi.json",
+    "build.rs",
+    "justfile",
+    "git_push.sh",
+    "Dockerfile",
+    "docs/",
+    "spec.md",
+    ".travis.yml",
 ]
 
 [build-dependencies]
