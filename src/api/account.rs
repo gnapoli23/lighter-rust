@@ -5,7 +5,7 @@ use crate::{
     error::Result,
     models::{
         AccountApiKeys, AccountLimits, AccountMetadatas, AccountPnL, DetailedAccounts, L1Metadata,
-        LiquidationInfos, PositionFundings, PublicPools, RespChangeAccountTier,
+        LiquidationInfos, PositionFundings, RespChangeAccountTier,
         RespPublicPoolsMetadata, SubAccounts,
     },
     signer::FFISigner,
