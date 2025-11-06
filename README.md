@@ -13,7 +13,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-lighter-rust = "0.1.0"
+lighter-rust = "0.2.0"
+```
+
+Or install via cargo:
+
+```bash
+cargo add lighter-rust
 ```
 
 Or use the latest from GitHub:
